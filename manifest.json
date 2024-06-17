@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "History Search",
+  "version": "1.0",
+  "permissions": ["history", "tabs"],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+
+  "icons": {
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "scripts": ["lib/fuse.min.js", "background.js"]
+  }
+}
