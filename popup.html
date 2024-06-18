@@ -7,9 +7,30 @@
         box-sizing: border-box;
       }
 
+      /* dark mode css at :root for background, foreground and hover */
+      :root {
+        --background: #fefefe;
+        --foreground: #111;
+        /* light variant of foreground */
+        --light-foreground: #666;
+        --hover: #d0d0d0;
+      }
+
+      /* if dark mode is enabled, change the colors */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #111;
+          --foreground: #eee;
+          --light-foreground: #999;
+          --hover: #333;
+        }
+      }
+
       html {
         margin: 0;
         padding: 0;
+        background: var(--background);
+        color: var(--foreground);
       }
 
       body {
@@ -21,6 +42,10 @@
         width: 300px;
         max-width: calc(100vw - (100vw - 100%));
         padding: 8px;
+        background-color: transparent;
+        border: 1px solid var(--light-foreground);
+        border-radius: 2px;
+        color: var(--foreground);
       }
 
       .result {
@@ -29,17 +54,18 @@
 
         margin: 8px 0;
         padding: 8px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--hover);
         border-radius: 2px;
         text-decoration: none;
         display: block;
+        color: var(--foreground);
 
         font-size: 12px;
 
         .title {
           font-weight: bold;
           font-size: 14px;
-          color: black;
+          /* color: black; */
           margin-bottom: 8px;
           overflow-y: hidden;
         }
@@ -47,7 +73,7 @@
         .url {
           display: block;
 
-          color: #666;
+          color: var(--light-foreground);
           text-decoration: underline;
           text-overflow: ellipsis;
           overflow: hidden;
@@ -62,7 +88,7 @@
       }
 
       .result:hover {
-        background-color: #d0d0d0;
+        background-color: var(--hover);
       }
     </style>
   </head>

@@ -37,9 +37,10 @@ browser.runtime.onMessage.addListener(async (message) => {
 
       fuse = new Fuse(historyItems, {
         keys: [{ name: 'title', weight: 2 }, 'url'],
+        // keys: ['title', 'url'],
         includeScore: true,
         useExtendedSearch: true,
-        threshold: 0.15,
+        threshold: 0.6,
       });
 
       // console.timeEnd('reload database');
@@ -60,14 +61,16 @@ browser.runtime.onMessage.addListener(async (message) => {
 
     // console.log('to filter', fused.length);
     // console.time('filter');
-    const filteredItems = fused.reduce((uniqueItems, item) => {
-      const origin = new URL(item.item.url).origin;
-      if (!uniqueItems.some((i) => new URL(i.url).origin === origin)) {
-        item.item.score = item.score;
-        uniqueItems.push(item.item);
-      }
-      return uniqueItems;
-    }, []);
+    const filteredItems = fused
+      .filter((_) => _.score < 0.2)
+      .reduce((uniqueItems, item) => {
+        const origin = new URL(item.item.url).origin;
+        if (!uniqueItems.some((i) => new URL(i.url).origin === origin)) {
+          item.item.score = item.score;
+          uniqueItems.push(item.item);
+        }
+        return uniqueItems;
+      }, []);
     // console.timeEnd('filter');
 
     // console.time('send');

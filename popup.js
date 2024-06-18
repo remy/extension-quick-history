@@ -1,4 +1,4 @@
-const deSearchHistory = debounce(searchHistory, 50);
+const deSearchHistory = debounce(searchHistory, 100);
 document.getElementById('search').addEventListener('input', deSearchHistory);
 
 function debounce(func, wait) {
@@ -49,9 +49,9 @@ function displayResults(items) {
 
       return `
       <a href=${item.url} target="_blank" class="result">
-      <div class="title">${item.title}</div>
+      <div class="title">${safe(item.title)}</div>
       <div class="url"><strong>${u.host}</strong>${u.pathname}</div>
-
+      <!--<div class="score">${item.score}</div>-->
       <div class="date">${d} &bull; ${timeAgo(
         new Date(item.lastVisitTime)
       )}</div></a>
@@ -59,6 +59,11 @@ function displayResults(items) {
     })
     .join('');
   // console.timeEnd('render');
+}
+
+function safe(str) {
+  if (!str) return str;
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function timeAgo(date) {
